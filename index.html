@@ -23,9 +23,9 @@
 	li {
 		list-style-type: none;
 		padding: 3px;
-		margin: 1px;
-		border-radius: 3px;
-		background-color: #EFEFEF;
+/*		margin: 1px;*/
+/*		border-radius: 3px;*/
+/*		background-color: #EFEFEF;*/
 	}
 	#chatBox {
 		position: fixed;
@@ -74,8 +74,7 @@
 			return Math.round(Math.random() * (max - min) + min);
 		}
 		
-		function Color() {}
-		Color.prototype = {
+		var color = {
 			red: randInt(0,255),
 			green: randInt(0,255),
 			blue: randInt(0,255),
@@ -84,18 +83,14 @@
 			}
 		};
 		
-		var color = new Color();
+		var myName = 'Someone';
+
 		document.getElementById('sendbtn').style.backgroundColor = color.toString();
-		
-		console.log(color.toString());
-		
+				
 		function addMessage(msg) {
 			var chat = document.getElementById('chat');
 			var li = document.createElement('li');
-			if (msg.color)
-				li.innerHTML = 'Someone says: '+msg.msg;
-			else
-				li.innerHTML = "Server: "+msg.msg;
+			li.innerHTML = msg.sender+': '+msg.msg;
 			li.style.color = msg.color;
 			chat.appendChild(li);
 		}
@@ -103,6 +98,7 @@
 		function sendMessage(msg) {
 			document.getElementById('msgbox').value = '';
 			msg = JSON.stringify({
+				sender: myName,
 				color: color.toString(),
 				msg: msg
 			});
@@ -113,8 +109,15 @@
 		ws.onopen = function(evt) {
 			console.log(evt);
 		}
+		ws.onclose = function(evt) {
+			console.log(evt);
+			addMessage({
+				sender: 'Alert',
+				msg: 'You were disconnected!',
+				color: 'rgb(255,10,10)'
+			});
+		}
 		ws.onmessage = function(evt) {
-			// console.log()
 			var data = JSON.parse(evt.data);
 			console.log(data);
 			if (data.msg)

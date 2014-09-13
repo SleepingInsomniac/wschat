@@ -1,14 +1,6 @@
 require 'em-websocket'
 require 'json'
 
-class Client  
-  attr_accessor :name
-  
-  def initialize
-    @name = (0...8).map { (65 + rand(26)).chr }.join
-  end
-end
-
 EM.run {
   @channel = EM::Channel.new
   
@@ -23,17 +15,31 @@ EM.run {
       # path, query_string, origin, headers
 
       # Publish message to the client
-      msg = {msg: "Someone Connected!"}.to_json
+      msg = {
+        sender: "Server",
+        msg: "Someone Connected!",
+        color: "rgb(50,50,50)"
+      }.to_json
       @channel.push msg
     }
 
-    ws.onclose { puts "Connection closed" }
+    ws.onclose {
+      @channel.push({
+        sender: "Server",
+        msg: "Someone disconnected",
+        color: "rgb(150,50,50)"
+      }.to_json)
+
+      puts "Connection closed"
+    }
 
     ws.onmessage { |msg|
-      
-      puts "Recieved message: #{msg}"
+      begin
+        puts JSON.parse(msg)
+      rescue
+        puts msg
+      end
       @channel.push msg
-      # ws.send msg
     }
   end
 }
