@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html lang="en"> 
+<head> 
+	<meta charset="utf-8"> 
+	<title>Chat</title> 
+	<meta name="description" content="Chat" />
+	<meta name="author" content="Alex Clink" />
+	<meta name="viewport" content="width=device-width" />
+	<style>
+	* {
+		box-sizing: border-box;
+	}
+	
+	html, body {
+		padding: 0;
+		margin: 0;
+	}
+	
+	ul {
+		padding: 5px;
+		margin: 5px;
+	}
+	li {
+		list-style-type: none;
+		padding: 3px;
+		margin: 1px;
+		border-radius: 3px;
+		background-color: #EFEFEF;
+	}
+	#chatBox {
+		position: fixed;
+		bottom: 0;
+		width: 100%;
+		padding: 5px;
+		border-top: 1px solid #CCC;
+		background-color: #EFEFEF;
+	}
+	#chatBox input[type=text] {
+		width: 70%;
+		padding: 4px;
+		border: none;
+		background-color: #FFF;
+		border-radius: 3px;
+		outline: none;
+	}
+	#chatBox input[type=text]:focus {
+		box-shadow: 10px 0 0 rgba(255,255,0);
+	}
+	#chatBox input[type=submit] {
+		float: right;
+		background-color: #555;
+		color: white;
+		padding: 5px 15px;
+		height: 100%;
+		border-radius: 3px;
+		border: none;
+	}
+	
+	</style>
+</head>
+<body>
+	<ul id="chat">
+		
+	</ul>
+	<div>
+		<form id="chatBox" onsubmit="sendMessage(document.getElementById('msgbox').value); return false;">
+			<input type="text" id="msgbox">
+			<input type="submit" value="Send" id="sendbtn">
+		</form>
+	</div>
+	
+	<script>
+		function randInt(min, max) {
+			return Math.round(Math.random() * (max - min) + min);
+		}
+		
+		function Color() {}
+		Color.prototype = {
+			red: randInt(0,255),
+			green: randInt(0,255),
+			blue: randInt(0,255),
+			toString: function() {
+				return 'rgb('+this.red+','+this.green+','+this.blue+')';
+			}
+		};
+		
+		var color = new Color();
+		document.getElementById('sendbtn').style.backgroundColor = color.toString();
+		
+		console.log(color.toString());
+		
+		function addMessage(msg) {
+			var chat = document.getElementById('chat');
+			var li = document.createElement('li');
+			if (msg.color)
+				li.innerHTML = 'Someone says: '+msg.msg;
+			else
+				li.innerHTML = "Server: "+msg.msg;
+			li.style.color = msg.color;
+			chat.appendChild(li);
+		}
+		
+		function sendMessage(msg) {
+			document.getElementById('msgbox').value = '';
+			msg = JSON.stringify({
+				color: color.toString(),
+				msg: msg
+			});
+			ws.send(msg);
+		}
+		
+		var ws = new WebSocket('ws://127.0.0.1:1234');
+		ws.onopen = function(evt) {
+			console.log(evt);
+		}
+		ws.onmessage = function(evt) {
+			// console.log()
+			var data = JSON.parse(evt.data);
+			console.log(data);
+			if (data.msg)
+				addMessage(data);
+		}
+		
+	</script>
+</body>
