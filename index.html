@@ -5,7 +5,7 @@
 	<title>Chat</title> 
 	<meta name="description" content="Chat" />
 	<meta name="author" content="Alex Clink" />
-	<meta name="viewport" content="width=device-width" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
 	<style>
 	* {
 		box-sizing: border-box;
@@ -23,9 +23,13 @@
 	li {
 		list-style-type: none;
 		padding: 3px;
-/*		margin: 1px;*/
-/*		border-radius: 3px;*/
-/*		background-color: #EFEFEF;*/
+	}
+
+	#chat {
+		position: fixed;
+		top: 0px;
+		left: 0px;
+		width: 100%;
 	}
 	#chatBox {
 		position: fixed;
@@ -36,7 +40,7 @@
 		background-color: #EFEFEF;
 	}
 	#chatBox input[type=text] {
-		width: 70%;
+		width: 80%;
 		padding: 4px;
 		border: none;
 		background-color: #FFF;
@@ -51,6 +55,7 @@
 		background-color: #555;
 		color: white;
 		padding: 5px 15px;
+		width: 15%;
 		height: 100%;
 		border-radius: 3px;
 		border: none;
@@ -59,9 +64,7 @@
 	</style>
 </head>
 <body>
-	<ul id="chat">
-		
-	</ul>
+	<ul id="chat"></ul>
 	<div>
 		<form id="chatBox" onsubmit="sendMessage(document.getElementById('msgbox').value); return false;">
 			<input type="text" id="msgbox" autocomplete="off">
