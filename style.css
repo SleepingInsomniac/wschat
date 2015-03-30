@@ -45,11 +45,11 @@ li p {
 	overflow: hidden;
 	position: relative;
 	
-	-webkit-animation: slideIn 0.4s 1 ease-in;
-	   -moz-animation: slideIn 0.4s 1 ease-in;
-	    -ms-animation: slideIn 0.4s 1 ease-in;
-	     -o-animation: slideIn 0.4s 1 ease-in;
-	        animation: slideIn 0.4s 1 ease-in;
+	-webkit-animation: slideIn 0.2s 1 ease-in;
+	   -moz-animation: slideIn 0.2s 1 ease-in;
+	    -ms-animation: slideIn 0.2s 1 ease-in;
+	     -o-animation: slideIn 0.2s 1 ease-in;
+	        animation: slideIn 0.2s 1 ease-in;
 			
 	-webkit-transform-origin: 0;
 	   -moz-transform-origin: 0;
