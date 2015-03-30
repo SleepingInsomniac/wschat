@@ -4,7 +4,7 @@ require 'json'
 EM.run {
   @channel = EM::Channel.new
   
-  EM::WebSocket.run(:host => "127.0.0.1", :port => 1234) do |ws|
+  EM::WebSocket.run(:host => "127.0.0.1", :port => 3001) do |ws|
     ws.onopen { |handshake|
       sid = @channel.subscribe do |msg|
         ws.send msg
@@ -15,31 +15,32 @@ EM.run {
       # path, query_string, origin, headers
 
       # Publish message to the client
-      msg = {
+      @channel.push({
         sender: "Server",
         msg: "Someone Connected!",
-        color: "rgb(50,50,50)"
-      }.to_json
-      @channel.push msg
+        color: {red: 50, blue: 50, green: 50},
+        time: Time.now.strftime('%r')
+      }.to_json)
     }
 
-    ws.onclose {
+    ws.onclose { |x|
+      puts x
       @channel.push({
         sender: "Server",
         msg: "Someone disconnected",
-        color: "rgb(150,50,50)"
+        color: {red: 150, green: 50, blue: 50},
+        time: Time.now.strftime('%r')
       }.to_json)
 
       puts "Connection closed"
     }
 
     ws.onmessage { |msg|
-      begin
-        puts JSON.parse(msg)
-      rescue
-        puts msg
-      end
-      @channel.push msg
+      msg = JSON.parse(msg)
+      msg[:time] = Time.now.strftime('%r')
+      puts msg
+      msg['msg'] = msg['msg'].to_s#.gsub(/\</, "&lt;").gsub(/\>/, "&gt;")
+      @channel.push(msg.to_json)
     }
   end
 }
