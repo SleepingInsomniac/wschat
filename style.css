@@ -86,7 +86,7 @@ p {
 	margin-bottom: 15vh;
 	width: 100%;
 	max-height: 85vh;
-	overflow: scroll;
+	overflow-y: scroll;
 	position: fixed;
 	top: 0;
 }
