@@ -10,6 +10,14 @@ GEM
       i18n
       rake (>= 10.0.0)
       sshkit (>= 1.9.0)
+    capistrano-bundler (1.2.0)
+      capistrano (~> 3.1)
+      sshkit (~> 1.2)
+    capistrano-passenger (0.2.0)
+      capistrano (~> 3.0)
+    capistrano-rvm (0.1.2)
+      capistrano (~> 3.0)
+      sshkit (~> 1.2)
     daemons (1.2.4)
     em-websocket (0.3.8)
       addressable (>= 2.1.1)
@@ -46,6 +54,9 @@ PLATFORMS
 
 DEPENDENCIES
   capistrano
+  capistrano-bundler
+  capistrano-passenger
+  capistrano-rvm
   sinatra
   sinatra-websocket
 
