@@ -64,7 +64,7 @@ var ws;
 
 function connect() {
   var protocol = /https/i.test(location.protocol) ? 'wss://' : 'ws://';
-  ws = new WebSocket("ws://" + location.host + "/");
+  ws = new WebSocket(protocol + location.host + "/");
 
   ws.onopen = function(evt) {
     console.log(evt);
