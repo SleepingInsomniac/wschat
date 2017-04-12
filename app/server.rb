@@ -1,3 +1,6 @@
+require 'sinatra-websocket'
+require 'json'
+
 set :views, 'app/views'
 set :sockets, []
 
