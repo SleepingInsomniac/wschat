@@ -1,24 +1,20 @@
 server {
   listen 80;
+  server_name chat.example.com;
+  location / { return 301 https://$server_name$request_uri; }
+}
+
+server {
+  listen 443 ssl;
+  add_header Strict-Transport-Security "max-age=31536000";
 
   root /var/www/chat/current/public;
-  server_name chat.example.com;
+  server_name chat.example;
+
   error_log /var/www/chat/current/log/nginx-error.log;
   access_log /var/www/chat/current/log/nginx-access.log;
 
   index index.html;
 
   passenger_enabled on;
-
-  location / {
-    rewrite ^ /index.html break;
-  }
-
-  location ~* \.(jpg|jpeg|png|gif|ico|css|js)$ {
-    
-  }
-
-  location ~ \.[a-z]*$ {
-    
-  }
 }
