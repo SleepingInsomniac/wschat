@@ -4,9 +4,21 @@ require 'json'
 set :views, 'app/views'
 set :sockets, []
 
+configure do
+  file = File.new("log/#{settings.environment}.log", 'a+')
+  file.sync = true
+  use Rack::CommonLogger, file
+end
+
 get '/ws' do
   pass unless request.websocket?
   @channel = EM::Channel.new
+
+  logger.info "============"
+  logger.info env['async.callback']
+  logger.info env['async.callback']
+  logger.info "============"
+
   request.websocket do |ws|
 
     ws.onopen do |handshake|
@@ -41,10 +53,6 @@ get '/ws' do
   end
 end
 
-get '/' do
-  erb :'index.html'
-end
-
 get // do
-  redirect '/'
+  redirect '/index.html'
 end
