@@ -63,7 +63,7 @@ function sendMessage(msg) {
 var ws;
 
 function connect() {
-  // console.log(location.host, location.port);
+  var protocol = /https/i.test(location.protocol) ? 'wss://' : 'ws://';
   ws = new WebSocket("ws://" + location.host + "/");
 
   ws.onopen = function(evt) {
