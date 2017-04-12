@@ -10,14 +10,9 @@ set :sockets, []
 get // do
 
   if request.websocket?
-    puts "Yes, websocket"
     @channel = EM::Channel.new
-
     request.websocket do |ws|
-      puts ws
-
       ws.onopen do |handshake|
-        puts handshake
         sid = @channel.subscribe { |msg| ws.send msg }
         puts "client #{sid}: WebSocket connection open"
         @channel.push({
@@ -29,7 +24,6 @@ get // do
       end
 
       ws.onclose do |x|
-        puts x
         @channel.push({
           sender: "Server",
           msg: "Someone disconnected",
