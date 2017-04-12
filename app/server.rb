@@ -38,6 +38,10 @@ get '/ws' do
   end
 end
 
-get // do
+get '/' do
   erb :'index.html'
+end
+
+get // do
+  redirect '/'
 end
