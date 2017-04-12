@@ -1,5 +1,6 @@
 require 'sinatra-websocket'
 require 'json'
+require 'em-websocket'
 
 set :views, 'app/views'
 set :sockets, []
@@ -13,11 +14,6 @@ end
 get '/ws' do
   pass unless request.websocket?
   @channel = EM::Channel.new
-
-  logger.info "============"
-  logger.info env['async.callback']
-  logger.info env['async.callback']
-  logger.info "============"
 
   request.websocket do |ws|
 

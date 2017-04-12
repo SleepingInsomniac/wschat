@@ -57,6 +57,7 @@ DEPENDENCIES
   capistrano-bundler
   capistrano-passenger
   capistrano-rvm
+  em-websocket
   sinatra
   sinatra-websocket
   thin

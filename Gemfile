@@ -3,6 +3,7 @@ source "https://rubygems.org"
 gem 'sinatra'
 gem 'sinatra-websocket'
 gem 'thin'
+gem 'em-websocket'
 
 group :development do
   gem 'capistrano'
