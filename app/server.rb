@@ -7,8 +7,8 @@ require 'json'
 set :views, 'app/views'
 set :sockets, []
 
-get '/' do
-  
+get // do
+
   if request.websocket?
     puts "Yes, websocket"
     @channel = EM::Channel.new
