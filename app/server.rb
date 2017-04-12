@@ -15,6 +15,9 @@ get '/ws' do
   pass unless request.websocket?
   @channel = EM::Channel.new
 
+  logger.info env.keys
+  logger.info env.to_json
+
   request.websocket do |ws|
 
     ws.onopen do |handshake|
