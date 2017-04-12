@@ -59,6 +59,7 @@ DEPENDENCIES
   capistrano-rvm
   sinatra
   sinatra-websocket
+  thin
 
 BUNDLED WITH
    1.14.6
