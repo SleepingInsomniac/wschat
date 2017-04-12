@@ -1,0 +1,24 @@
+server {
+  listen 80;
+
+  root /var/www/chat/current/public;
+  server_name chat.example.com;
+  error_log /var/www/chat/current/log/nginx-error.log;
+  access_log /var/www/chat/current/log/nginx-access.log;
+
+  index index.html;
+
+  passenger_enabled on;
+
+  location / {
+    rewrite ^ /index.html break;
+  }
+
+  location ~* \.(jpg|jpeg|png|gif|ico|css|js)$ {
+    
+  }
+
+  location ~ \.[a-z]*$ {
+    
+  }
+}
