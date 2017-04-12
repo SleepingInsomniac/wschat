@@ -17,7 +17,8 @@ get '/ws' do
 
   # logger.info env.keys
   # logger.info env.to_json
-  logger.info request
+  # logger.info request
+  env['async.orig_callback'] = env['rack.hijack'] if env['rack.hijack']
 
   request.websocket do |ws|
 
